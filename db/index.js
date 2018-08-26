@@ -2,7 +2,7 @@ const chalk = require('chalk'); /* eslint-disable-line */
 const Sequelize = require('sequelize');
 require('dotenv').config();/* eslint-disable-line */
 
-let url = process.env.DATABASE_URL || 'postgres://xyysiznlfvpqyk:f5337bcd7be3df2c8db2770998a2501402835edaba13821cc2762601cd7749ab@ec2-54-235-242-63.compute-1.amazonaws.com:5432/dbj72ec9b1uq8';
+let url = process.env.DATABASE_URL;
 
 if (process.env.NODE_ENV === 'test') {
   url = process.env.TEST_DATABASE_URL;
