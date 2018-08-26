@@ -1,0 +1,41 @@
+{
+  "name": "onyango",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.1",
+    "express": "^4.16.3",
+    "material-ui": "^0.20.0",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.18.3",
+    "pg": "^7.4.3",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^1.1.5",
+    "react-test-renderer": "^16.4.2",
+    "sequelize": "^4.38.0"
+  },
+  "scripts": {
+    "start": "concurrently \"react-scripts start\" \"nodemon server\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "seed": "node db/seed.js",
+    "api_test": "jest --runInBand /server"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.6",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1",
+    "superagent": "^3.8.3",
+    "supertest": "^3.1.0"
+  },
+  "proxy": "http://localhost:8000"
+}
