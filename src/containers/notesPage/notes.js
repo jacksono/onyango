@@ -97,7 +97,15 @@ class User extends React.Component {
         >
           <ContentAdd />
         </FloatingActionButton>
-        <Divider />
+        <Divider style={{ marginBottom: '10px' }} />
+        {notes.length === 0
+          && (
+            <span>
+              You have no notes yet.
+              <Link to="/new"> Click here </Link>
+              to add some
+            </span>
+          )}
         { isEditing
           ? (
             <EditNote
@@ -107,9 +115,9 @@ class User extends React.Component {
             />
           )
           : (
-            <ul>
+            <div>
               {notes.map(note => (
-                <li key={note.id}>
+                <span key={note.id}>
                   <Link to={`/view/${note.title}`}>{note.title}</Link>
 
                   <div style={{ float: 'right' }}>
@@ -132,9 +140,9 @@ class User extends React.Component {
                   <br />
                   <Divider style={{ marginBottom: '10px' }} />
 
-                </li>
+                </span>
               ))}
-            </ul>
+            </div>
           )
           }
       </div>
