@@ -34,4 +34,15 @@ router.post('/', (req, res) => {
     .catch(error => console.error(error));
 });
 
+router.put('/:id', (req, res) => {
+  Note.update(
+    { title: req.body.title, content: req.body.content },
+    { where: { id: req.params.id } },
+  )
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch(error => console.error(error));
+});
+
 module.exports = router;
