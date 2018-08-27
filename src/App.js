@@ -6,6 +6,7 @@ import Header from './components/header/header';
 import Home from './components/homePage/home';
 import Users from './containers/usersPage/users';
 import Notes from './containers/notesPage/notes';
+import AddNote from './components/addNotePage/addNote';
 
 const App = () => {
   return (
@@ -14,8 +15,9 @@ const App = () => {
         <div>
           <Header />
           <Route path="/home" component={Home} />
-          <Route path="/users/" component={Users} />
-          <Route path="/notes/" component={Notes} />
+          <Route path="/users" component={Users} />
+          <Route path="/notes" component={Notes} />
+          <Route path="/new" component={AddNote} />
         </div>
       </Router>
     </MuiThemeProvider>

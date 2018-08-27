@@ -45,29 +45,16 @@ class User extends React.Component {
     });
   };
 
-  createNote =() => {
-    const { notes, title, content } = this.state;
-    const payload = { title, content };
-    axios.post('/', payload)
-      .then(() => {
-        notes.push(payload);
-        this.setState({
-          notes,
-        });
-      })
-      .catch(error => console.error(error));
-  }
-
   render() {
     const { notes } = this.state;
     return (
-      <div style={{ textAlign: 'left', backgroundColor: 'white', padding: '1rem' }}>
+      <div className="page">
         <h1>Notes</h1>
         <FloatingActionButton
           mini
           secondary
           style={{ float: 'right', marginTop: '-3rem' }}
-          onClick={this.createNote}
+          onClick={() => this.props.history.push('/new')}
         >
           <ContentAdd />
         </FloatingActionButton>

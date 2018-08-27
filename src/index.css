@@ -24,3 +24,9 @@ input {
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
 }
+
+.page {
+  text-align: left;
+  background-color: white;
+  padding: 1rem
+}
