@@ -12,16 +12,15 @@ router.get('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  if (req.params.id && typeof req.params.id === 'number') {
+  if (req.params.id) {
     Note.destroy({ where: { id: req.params.id } })
       .then(() => {
         res.status(200);
       })
       .catch(error => console.error(error));
   } else {
-    res.status(400).send({ message: 'Invalid or missing parameter'})
+    res.status(400).send({ message: 'Invalid or missing parameter' });
   }
-
 });
 
 

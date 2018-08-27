@@ -10,7 +10,6 @@ const Header = () => {
           <li><Link to="/home">Home</Link></li>
           <li><Link to="/users/1">Users</Link></li>
           <li><Link to="/notes">Notes</Link></li>
-          <li><Link to="/home">Sign Out</Link></li>
         </ul>
       </nav>
     </div>

@@ -3,6 +3,8 @@ import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 class User extends React.Component {
   state = {
@@ -25,13 +27,14 @@ class User extends React.Component {
   };
 
   deleteNote = (id) => {
+    const { notes } = this.state;
     axios.delete(`api/notes/${id}`)
       .then(() => {
-        const  newNotes = this.state.notes.filter(note => note.id !== id)
+        const newNotes = notes.filter(note => note.id !== id);
         this.setState({
           notes: newNotes,
-        })
-      })
+        });
+      });
   }
 
   handleChange = (event) => {
@@ -42,16 +45,39 @@ class User extends React.Component {
     });
   };
 
+  createNote =() => {
+    const { notes, title, content } = this.state;
+    const payload = { title, content };
+    axios.post('/', payload)
+      .then(() => {
+        notes.push(payload);
+        this.setState({
+          notes,
+        });
+      })
+      .catch(error => console.error(error));
+  }
+
   render() {
     const { notes } = this.state;
     return (
       <div style={{ textAlign: 'left', backgroundColor: 'white', padding: '1rem' }}>
+        <h1>Notes</h1>
+        <FloatingActionButton
+          mini
+          secondary
+          style={{ float: 'right', marginTop: '-3rem' }}
+          onClick={this.createNote}
+        >
+          <ContentAdd />
+        </FloatingActionButton>
+        <Divider />
         <ul>
           {notes.map(note => (
             <li key={note.id}>
               <p>{`Title: ${note.title} `}</p>
               <p>{note.content}</p>
-              <button type="button" onClick={this.deleteNote(note.id)}> Delete </button>
+              <button type="button" onClick={() => this.deleteNote(note.id)}> Delete </button>
             </li>
           ))}
         </ul>
