@@ -4,9 +4,13 @@ import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import EditNote from '../../components/editNotePage/editNote'
+
 class User extends React.Component {
   state = {
     notes: [],
+    isEditing: false,
+    noteEdit: '',
   };
 
   componentDidMount() {
@@ -43,8 +47,28 @@ class User extends React.Component {
     });
   };
 
+  editNote = (note) => {
+    this.setState({
+      noteEdit: note,
+      isEditing: true,
+    });
+  }
+
+  updateNote = () => {
+    const { notes, noteEdit } = this.state;
+    const payload = { title: noteEdit.title, content: noteEdit.content };
+    notes.splice(noteEdit.id, 1, noteEdit);
+    axios.put(`api/notes/${noteEdit.id}`, payload)
+      .then(() => {
+        this.setState({
+          notes,
+        });
+        this.props.history.push('/notes')
+      });
+  }
+
   render() {
-    const { notes } = this.state;
+    const { notes, noteEdit, isEditing } = this.state;
     return (
       <div className="page">
         <h1>Notes</h1>
@@ -57,32 +81,43 @@ class User extends React.Component {
           <ContentAdd />
         </FloatingActionButton>
         <Divider />
-        <ul>
-          {notes.map(note => (
-            <li key={note.id}>
-              <span>{`Title: ${note.title} `}</span>
+        { isEditing
+          ? (
+            <EditNote
+              noteEdit={noteEdit}
+              handleChange={this.handleChange}
+              updateNote={this.updateNote}
+            />
+          )
+          : (
+            <ul>
+              {notes.map(note => (
+                <li key={note.id}>
+                  <span>{`Title: ${note.title} `}</span>
 
-              <div style={{ float: 'right' }}>
-                <button
-                  type="button"
-                  onClick={() => this.deleteNote(note.id)}
-                >
-                  Edit
-                </button>
+                  <div style={{ float: 'right' }}>
+                    <button
+                      type="button"
+                      onClick={() => this.editNote(note)}
+                    >
+                      Edit
+                    </button>
 
-                <button
-                  type="button"
-                  onClick={() => this.deleteNote(note.id)}
-                  style={{ marginLeft: '10px' }}
-                >
-                  Delete
-                </button>
-              </div>
-              <p>{note.content}</p>
+                    <button
+                      type="button"
+                      onClick={() => this.deleteNote(note.id)}
+                      style={{ marginLeft: '10px' }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                  <p>{note.content}</p>
 
-            </li>
-          ))}
-        </ul>
+                </li>
+              ))}
+            </ul>
+          )
+          }
         <Divider />
       </div>
     );
