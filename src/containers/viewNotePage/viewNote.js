@@ -61,6 +61,12 @@ class ViewNote extends React.Component {
       });
   }
 
+  handleCancel = () => {
+    this.setState({
+      isEditing: false,
+    });
+  }
+
   render() {
     const {
       isEditing, title, content, id,
@@ -73,6 +79,7 @@ class ViewNote extends React.Component {
               noteEdit={{ title, content }}
               handleChange={this.handleChange}
               updateNote={this.updateNote}
+              handleCancel={this.handleCancel}
             />
           )
           : (

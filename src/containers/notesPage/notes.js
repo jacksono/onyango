@@ -84,6 +84,12 @@ class User extends React.Component {
       });
   }
 
+  handleCancel = () => {
+    this.setState({
+      isEditing: false,
+    });
+  }
+
   render() {
     const { notes, noteEdit, isEditing } = this.state;
     return (
@@ -112,6 +118,7 @@ class User extends React.Component {
               noteEdit={noteEdit}
               handleChange={this.handleChange}
               updateNote={this.updateNote}
+              handleCancel={this.handleCancel}
             />
           )
           : (

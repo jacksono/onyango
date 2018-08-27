@@ -56,7 +56,16 @@ class AddNote extends React.Component {
           style={{ display: 'block', border: '1px solid whitesmoke', borderBottom: 'none' }}
         />
 
-        <RaisedButton onClick={this.createNote} label="Add Note" primary />
+        <RaisedButton
+          onClick={this.createNote}
+          label="Add Note"
+          primary
+          style={{ marginRight: '10px' }}
+        />
+        <RaisedButton
+          onClick={() => this.props.history.push('/notes')}
+          label="Cancel"
+        />
       </div>
     );
   }

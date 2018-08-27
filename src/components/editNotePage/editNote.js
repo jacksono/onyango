@@ -26,7 +26,16 @@ const EditNote = (props) => {
         style={{ display: 'block', border: '1px solid whitesmoke', borderBottom: 'none' }}
       />
 
-      <RaisedButton onClick={props.updateNote} label="Update Note" primary />
+      <RaisedButton
+        onClick={props.updateNote}
+        label="Update Note"
+        primary
+        style={{ marginRight: '10px' }}
+      />
+      <RaisedButton
+        onClick={props.handleCancel}
+        label="Cancel"
+      />
     </div>
   );
 };
