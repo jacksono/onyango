@@ -42,28 +42,42 @@ class User extends React.Component {
   handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
+    if (name === 'titleEdit') {
+      const edit = Object.assign({}, this.state.noteEdit, { title: value });
+      this.setState({
+        noteEdit: edit,
+      });
+    } else if (name === 'contentEdit') {
+      const edit = Object.assign({}, this.state.noteEdit, { content: value });
+      this.setState({
+        noteEdit: edit,
+      });
+    } else {
+      this.setState({
+        [name]: value,
+      });
+    }
   };
 
   editNote = (note) => {
+    const index = this.state.notes.indexOf(note)
     this.setState({
       noteEdit: note,
       isEditing: true,
+      indexEdit: index,
     });
   }
 
   updateNote = () => {
-    const { notes, noteEdit } = this.state;
+    const { notes, noteEdit, indexEdit } = this.state;
     const payload = { title: noteEdit.title, content: noteEdit.content };
-    notes.splice(noteEdit.id, 1, noteEdit);
+    notes.splice(indexEdit, 1, noteEdit);
     axios.put(`api/notes/${noteEdit.id}`, payload)
       .then(() => {
         this.setState({
           notes,
+          isEditing: false,
         });
-        this.props.history.push('/notes')
       });
   }
 
@@ -112,13 +126,13 @@ class User extends React.Component {
                     </button>
                   </div>
                   <p>{note.content}</p>
+                  <Divider style={{ marginBottom: '10px' }} />
 
                 </li>
               ))}
             </ul>
           )
           }
-        <Divider />
       </div>
     );
   }
