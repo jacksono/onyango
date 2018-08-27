@@ -19,7 +19,7 @@
     "sequelize": "^4.38.0"
   },
   "scripts": {
-    "start": "node server",
+    "start": "concurrently \"react-scripts start\" \"nodemon server\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

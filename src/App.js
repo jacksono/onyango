@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from './components/header/header';
 import Home from './components/homePage/home';
 import Users from './containers/usersPage/users';
+import Notes from './containers/notesPage/notes';
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
         <div>
           <Header />
           <Route path="/home" component={Home} />
-          <Route path="/users" component={Users} />
+          <Route path="/users/" component={Users} />
+          <Route path="/notes/" component={Notes} />
         </div>
       </Router>
     </MuiThemeProvider>
