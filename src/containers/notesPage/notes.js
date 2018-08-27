@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import EditNote from '../../components/editNotePage/editNote'
+import EditNote from '../../components/editNotePage/editNote';
 
 class User extends React.Component {
   state = {
@@ -107,7 +108,7 @@ class User extends React.Component {
             <ul>
               {notes.map(note => (
                 <li key={note.id}>
-                  <span>{`Title: ${note.title} `}</span>
+                  <Link to={`/view/${note.title}`}>{note.title}</Link>
 
                   <div style={{ float: 'right' }}>
                     <button
@@ -125,7 +126,8 @@ class User extends React.Component {
                       Delete
                     </button>
                   </div>
-                  <p>{note.content}</p>
+                  <br />
+                  <br />
                   <Divider style={{ marginBottom: '10px' }} />
 
                 </li>
