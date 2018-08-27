@@ -1,7 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -62,9 +60,26 @@ class User extends React.Component {
         <ul>
           {notes.map(note => (
             <li key={note.id}>
-              <p>{`Title: ${note.title} `}</p>
+              <span>{`Title: ${note.title} `}</span>
+
+              <div style={{ float: 'right' }}>
+                <button
+                  type="button"
+                  onClick={() => this.deleteNote(note.id)}
+                >
+                  Edit
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => this.deleteNote(note.id)}
+                  style={{ marginLeft: '10px' }}
+                >
+                  Delete
+                </button>
+              </div>
               <p>{note.content}</p>
-              <button type="button" onClick={() => this.deleteNote(note.id)}> Delete </button>
+
             </li>
           ))}
         </ul>
