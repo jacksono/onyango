@@ -15,7 +15,7 @@ router.delete('/:id', (req, res) => {
   if (req.params.id) {
     Note.destroy({ where: { id: req.params.id } })
       .then(() => {
-        res.status(200);
+        res.status(200).send({ message: 'Note deleted' });
       })
       .catch(error => console.error(error));
   } else {
@@ -23,5 +23,15 @@ router.delete('/:id', (req, res) => {
   }
 });
 
+router.post('/', (req, res) => {
+  Note.create({
+    title: req.body.title,
+    content: req.body.content,
+  })
+    .then((response) => {
+      res.status(201).send(response);
+    })
+    .catch(error => console.error(error));
+});
 
 module.exports = router;

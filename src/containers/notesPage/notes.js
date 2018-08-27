@@ -28,9 +28,9 @@ class User extends React.Component {
 
   deleteNote = (id) => {
     const { notes } = this.state;
+    const newNotes = notes.filter(note => note.id !== id);
     axios.delete(`api/notes/${id}`)
       .then(() => {
-        const newNotes = notes.filter(note => note.id !== id);
         this.setState({
           notes: newNotes,
         });

@@ -22,24 +22,24 @@ class AddNote extends React.Component {
   createNote =() => {
     const { title, content } = this.state;
     const payload = { title, content };
-    axios.post('/', payload)
+    axios.post('/api/notes', payload)
       .then(() => {
         console.log('Note Added Succesfully');
-        this.props.history.push('/notes')
+        this.props.history.push('/notes');
       })
       .catch(error => console.error(error));
   }
 
   render() {
-    const { title } = this.state;
+    const { title, content } = this.state;
     return (
       <div className="page">
         <h1> Add Note </h1>
         <Divider />
         <TextField
-          id="newNote"
+          id="title"
           hintText="Title"
-          name=""
+          name="title"
           value={title}
           onChange={this.handleChange}
           style={{ display: 'block' }}
@@ -47,8 +47,12 @@ class AddNote extends React.Component {
 
         <TextField
           floatingLabelText="Content"
+          id="content"
+          name="content"
+          value={content}
           multiLine
           rows={3}
+          onChange={this.handleChange}
           style={{ display: 'block', border: '1px solid whitesmoke', borderBottom: 'none' }}
         />
 
