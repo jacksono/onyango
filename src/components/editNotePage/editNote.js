@@ -29,6 +29,6 @@ const EditNote = (props) => {
       <RaisedButton onClick={props.updateNote} label="Update Note" primary />
     </div>
   );
-  };
+};
 
 export default EditNote;

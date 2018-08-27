@@ -43,13 +43,14 @@ class User extends React.Component {
   handleChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
+    const { noteEdit } = this.state;
     if (name === 'titleEdit') {
-      const edit = Object.assign({}, this.state.noteEdit, { title: value });
+      const edit = Object.assign({}, noteEdit, { title: value });
       this.setState({
         noteEdit: edit,
       });
     } else if (name === 'contentEdit') {
-      const edit = Object.assign({}, this.state.noteEdit, { content: value });
+      const edit = Object.assign({}, noteEdit, { content: value });
       this.setState({
         noteEdit: edit,
       });
@@ -61,7 +62,8 @@ class User extends React.Component {
   };
 
   editNote = (note) => {
-    const index = this.state.notes.indexOf(note)
+    const { notes } = this.state;
+    const index = notes.indexOf(note);
     this.setState({
       noteEdit: note,
       isEditing: true,

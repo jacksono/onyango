@@ -45,4 +45,12 @@ router.put('/:id', (req, res) => {
     .catch(error => console.error(error));
 });
 
+router.get('/:title', (req, res) => {
+  Note.findOne({ where: { title: req.params.title } })
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch(error => console.error(error));
+});
+
 module.exports = router;

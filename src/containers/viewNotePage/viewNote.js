@@ -1,33 +1,108 @@
 import React from 'react';
 import axios from 'axios';
 import Divider from 'material-ui/Divider';
+import EditNote from '../../components/editNotePage/editNote';
 
 class ViewNote extends React.Component {
   state = {
-    note: '',
+    id: '',
+    title: '',
+    content: '',
+    isEditing: false,
   }
 
   componentDidMount() {
-    axios.get(`/${this.props.match.params.title}`)
+    axios.get(`/api/notes/${this.props.match.params.title}`)
       .then((res) => {
         this.setState({
-          note: res.data,
+          id: res.data.id,
+          title: res.data.title,
+          content: res.data.content,
         });
       })
       .catch(error => console.error(error));
   }
 
+  editNote = () => {
+    this.setState({
+      isEditing: true,
+    });
+  }
+
+  handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    if (name === 'titleEdit') {
+      this.setState({
+        title: value,
+      });
+    } else if (name === 'contentEdit') {
+      this.setState({
+        content: value,
+      });
+    }
+  };
+
+  updateNote = () => {
+    const { title, content, id } = this.state;
+    const payload = { title, content };
+    axios.put(`/api/notes/${id}`, payload)
+      .then(() => {
+        this.setState({
+          isEditing: false,
+        });
+      });
+  }
+
+  deleteNote = (id) => {
+    axios.delete(`/api/notes/${id}`)
+      .then(() => {
+        this.props.history.push('/notes');
+      });
+  }
+
   render() {
-    const { note } = this.state;
+    const {
+      isEditing, title, content, id,
+    } = this.state;
     return (
       <div className="page">
-        <h1>
-          {note.title}
-        </h1>
-        <p>
-          {note.content}
-        </p>
-        <Divider />
+        {isEditing
+          ? (
+            <EditNote
+              noteEdit={{ title, content }}
+              handleChange={this.handleChange}
+              updateNote={this.updateNote}
+            />
+          )
+          : (
+            <div>
+              <div style={{ float: 'right' }}>
+                <button
+                  type="button"
+                  onClick={() => this.editNote()}
+                >
+                  Edit
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => this.deleteNote(id)}
+                  style={{ marginLeft: '10px' }}
+                >
+                  Delete
+                </button>
+              </div>
+              <h1>
+                {title}
+              </h1>
+              <Divider />
+              <p>
+                {content}
+              </p>
+            </div>
+          )
+        }
       </div>
     );
   }
