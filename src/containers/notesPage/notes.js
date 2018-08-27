@@ -94,7 +94,7 @@ class User extends React.Component {
     const { notes, noteEdit, isEditing } = this.state;
     return (
       <div className="page">
-        <h1>Notes</h1>
+        <h1>My Notes</h1>
         <FloatingActionButton
           mini
           secondary

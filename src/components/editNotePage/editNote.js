@@ -7,21 +7,25 @@ const EditNote = (props) => {
   const { noteEdit, handleChange } = props;
   return (
     <div>
-      <Divider />
+
       <TextField
+        floatingLabelText="Title"
         id="titleEdit"
         name="titleEdit"
         value={noteEdit.title}
         onChange={handleChange}
+        fullWidth
         style={{ display: 'block' }}
       />
 
       <TextField
+        floatingLabelText="Content"
         id="contentEdit"
         name="contentEdit"
         value={noteEdit.content}
         multiLine
         rows={3}
+        fullWidth
         onChange={handleChange}
         style={{ display: 'block', border: '1px solid whitesmoke', borderBottom: 'none' }}
       />

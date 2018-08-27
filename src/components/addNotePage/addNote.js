@@ -37,10 +37,11 @@ class AddNote extends React.Component {
         <h1> Add Note </h1>
         <Divider />
         <TextField
+          floatingLabelText="Title"
           id="title"
-          hintText="Title"
           name="title"
           value={title}
+          fullWidth
           onChange={this.handleChange}
           style={{ display: 'block' }}
         />
@@ -52,6 +53,7 @@ class AddNote extends React.Component {
           value={content}
           multiLine
           rows={3}
+          fullWidth
           onChange={this.handleChange}
           style={{ display: 'block', border: '1px solid whitesmoke', borderBottom: 'none' }}
         />
