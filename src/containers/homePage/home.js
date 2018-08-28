@@ -7,7 +7,7 @@ import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import EditNote from '../editNotePage/editNote';
+import EditNote from '../../components/editNotePage/editNote';
 
 class Home extends React.Component {
   state = {
@@ -63,8 +63,10 @@ class Home extends React.Component {
       .catch((error) => {
         if (error.response.status === 403) {
           toastr.error(error.response.data.message);
+        } else {
+          console.error(error.response);
+          toastr.error('Internal Server Error');
         }
-        console.error(error.response)
       });
   }
 
@@ -117,8 +119,10 @@ class Home extends React.Component {
       .catch((error) => {
         if (error.response.status === 403) {
           toastr.error(error.response.data.message);
+        } else {
+          toastr.error('Internal Server Error');
+          console.error(error.response);
         }
-        console.error(error.response);
       });
   }
 

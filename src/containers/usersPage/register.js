@@ -34,7 +34,7 @@ class Register extends React.Component {
       })
       .catch((error) => {
         toastr.error('Internal Server Error');
-        console.error('Error:', error)
+        console.error('Error:', error);
       });
   };
 

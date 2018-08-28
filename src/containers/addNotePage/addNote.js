@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import toastr from 'toastr';
 
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -23,13 +24,20 @@ class AddNote extends React.Component {
 
   createNote =() => {
     const { title, content, token, userId } = this.state;
+    if (!(title && content)) {
+      toastr.error('Please fill in both fields');
+      return;
+    }
     const payload = { title, content, userId };
     axios.post('/api/notes', payload, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         console.log('Note Added Succesfully');
         this.props.history.push('/notes');
       })
-      .catch(error => console.error(error));
+      .catch((error) => {
+        toastr.error('Internal Server Error');
+        console.error('Error:', error);
+      });
   }
 
   render() {

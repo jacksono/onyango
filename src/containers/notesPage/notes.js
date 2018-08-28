@@ -62,8 +62,10 @@ class User extends React.Component {
       .catch((error) => {
         if (error.response.status === 403) {
           toastr.error(error.response.data.message);
+        } else {
+          console.error(error.response);
+          toastr.error('Internal Server Error');
         }
-        console.error(error.response)
       });
   }
 
@@ -116,8 +118,10 @@ class User extends React.Component {
       .catch((error) => {
         if (error.response.status === 403) {
           toastr.error(error.response.data.message);
+        } else {
+          console.error(error.response);
+          toastr.error('Internal Servor Error');
         }
-        console.error(error.response);
       });
   }
 

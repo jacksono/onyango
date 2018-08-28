@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Header from './components/header/header';
-import Home from './components/homePage/home';
+import Home from './containers/homePage/home';
 import Users from './containers/usersPage/users';
 import Notes from './containers/notesPage/notes';
-import AddNote from './components/addNotePage/addNote';
+import AddNote from './containers/addNotePage/addNote';
 import ViewNote from './containers/viewNotePage/viewNote';
 import Register from './containers/usersPage/register';
 import SignIn from './containers/usersPage/signin';
