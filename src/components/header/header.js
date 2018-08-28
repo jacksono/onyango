@@ -20,7 +20,15 @@ const Header = ({ history }) => {
                 <span style={{ float: 'right', marginTop: '-30px' }}>{`Signed in as ${localStorage.getItem('username')}`}</span>
                 <nav>
                   <span style={{ marginLeft: '10px' }}><Link to="/notes">My Notes</Link></span>
-                  <span><Link to="/home" style={{ float: 'right'}}>Sign Out</Link></span>
+                  <span>
+                    <Link
+                      to="/"
+                      style={{ float: 'right' }}
+                      onClick={() => localStorage.clear()}
+                    >
+                      Sign Out
+                    </Link>
+                  </span>
                 </nav>
               </div>
             )}
