@@ -12,11 +12,14 @@ const encodeToken = (user) => {
 };
 
 const decodeToken = (token, callback) => {
-  const payload = jwt.decode(token, process.env.SECRET_KEY);
-  const now = moment().unix();
-
-  if (now > payload.exp) callback('Token has expired.');
-  else callback(null, payload);
+  try {
+    const payload = jwt.decode(token, process.env.SECRET_KEY);
+    const now = moment().unix();
+    if (now > payload.exp) callback('Token has expired.');
+    else callback(null, payload);
+  } catch (err) {
+    return callback('Invalid Token.');
+  }
 };
 
 module.exports = { encodeToken, decodeToken };

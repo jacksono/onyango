@@ -59,7 +59,7 @@ class User extends React.Component {
       .post(
         '/api/users',
         { name: newUser, title: 'Sir' },
-        { headers: { 'x-head': 'header' } },
+        { headers: { 'authorization': 'header' } },
       )
       .then(() => {
         this.fetchdata();
