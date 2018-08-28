@@ -1,13 +1,16 @@
 import React from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import Divider from 'material-ui/Divider';
 import EditNote from '../../components/editNotePage/editNote';
+
 
 class ViewNote extends React.Component {
   state = {
     id: '',
     title: '',
     content: '',
+    createdDate: '',
     isEditing: false,
     token: localStorage.getItem('token'),
   }
@@ -20,6 +23,7 @@ class ViewNote extends React.Component {
           id: res.data.id,
           title: res.data.title,
           content: res.data.content,
+          createdDate: res.data.created_at,
         });
       })
       .catch(error => console.error(error));
@@ -57,7 +61,7 @@ class ViewNote extends React.Component {
   }
 
   deleteNote = (id) => {
-    const { token } = this.state; 
+    const { token } = this.state;
     axios.delete(`/api/notes/${id}`, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         this.props.history.push('/notes');
@@ -72,7 +76,7 @@ class ViewNote extends React.Component {
 
   render() {
     const {
-      isEditing, title, content, id,
+      isEditing, title, content, id, createdDate,
     } = this.state;
     return (
       <div className="page">
@@ -106,6 +110,9 @@ class ViewNote extends React.Component {
               <h1>
                 {title}
               </h1>
+              <span style={{ float: 'right', marginTop: '-20px' }}>
+                {`Written on ${moment(createdDate).format('LL')}`}
+              </span>
               <Divider />
               <p>
                 {content}
