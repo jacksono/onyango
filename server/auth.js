@@ -35,7 +35,11 @@ router.post('/signin', (req, res) => {
       return localAuth.encodeToken(user);
     })
     .then((token) => {
-      res.status(200).send({ message: 'Signed in Successfully', token });
+      res.status(200).send({
+        message: 'Signed in Successfully',
+        username: req.body.username,
+        token,
+      });
     })
     .catch(error => console.error(error));
 });

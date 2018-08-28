@@ -27,6 +27,7 @@ class SignIn extends React.Component {
       .then((response) => {
         this.props.history.push('/notes');
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', response.data.username);
       })
       .catch(error => console.error('Error:', error));
   };

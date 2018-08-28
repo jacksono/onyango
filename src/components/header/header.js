@@ -11,15 +11,18 @@ const Header = ({ history }) => {
           { history.location.pathname === '/'
             ? (
               <nav>
-                <p><Link to="/auth/signIn">Sign In</Link></p>
-                <p style={{ marginLeft: '10px' }}><Link to="/auth/register">Register</Link></p>
+                <span><Link to="/auth/signIn">Sign In</Link></span>
+                <span style={{ marginLeft: '10px' }}><Link to="/auth/register">Register</Link></span>
               </nav>
             )
             : (
-              <nav>
-                <p><Link to="/home">Home</Link></p>
-                <p style={{ marginLeft: '10px' }}><Link to="/notes">My Notes</Link></p>
-              </nav>
+              <div>
+                <span style={{ float: 'right', marginTop: '-30px' }}>{`Signed in as ${localStorage.getItem('username')}`}</span>
+                <nav>
+                  <span style={{ marginLeft: '10px' }}><Link to="/notes">My Notes</Link></span>
+                  <span><Link to="/home" style={{ float: 'right'}}>Sign Out</Link></span>
+                </nav>
+              </div>
             )}
         </div>
       )}
