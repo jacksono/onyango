@@ -24,8 +24,9 @@ class SignIn extends React.Component {
         '/api/auth/signIn',
         { username, password },
       )
-      .then(() => {
+      .then((response) => {
         this.props.history.push('/notes');
+        localStorage.setItem('token', response.data.token);
       })
       .catch(error => console.error('Error:', error));
   };

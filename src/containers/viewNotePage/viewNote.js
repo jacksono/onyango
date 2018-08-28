@@ -9,10 +9,12 @@ class ViewNote extends React.Component {
     title: '',
     content: '',
     isEditing: false,
+    token: localStorage.getItem('token'),
   }
 
   componentDidMount() {
-    axios.get(`/api/notes/${this.props.match.params.title}`)
+    const { token } = this.state;
+    axios.get(`/api/notes/${this.props.match.params.title}`, { headers: { authorization: `Bearer ${token}` } })
       .then((res) => {
         this.setState({
           id: res.data.id,
@@ -44,9 +46,9 @@ class ViewNote extends React.Component {
   };
 
   updateNote = () => {
-    const { title, content, id } = this.state;
+    const { title, content, id, token } = this.state;
     const payload = { title, content };
-    axios.put(`/api/notes/${id}`, payload)
+    axios.put(`/api/notes/${id}`, payload, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         this.setState({
           isEditing: false,
@@ -55,7 +57,8 @@ class ViewNote extends React.Component {
   }
 
   deleteNote = (id) => {
-    axios.delete(`/api/notes/${id}`)
+    const { token } = this.state; 
+    axios.delete(`/api/notes/${id}`, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         this.props.history.push('/notes');
       });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import toastr from 'toastr';
 import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -12,6 +13,8 @@ class User extends React.Component {
     notes: [],
     isEditing: false,
     noteEdit: '',
+    error: true,
+    token: localStorage.getItem('token'),
   };
 
   componentDidMount() {
@@ -19,20 +22,28 @@ class User extends React.Component {
   }
 
   fetchdata = () => {
+    const { token } = this.state;
     axios
-      .get('/api/notes')
+      .get('/api/notes', { headers: { authorization: `Bearer ${token}` } })
       .then((res) => {
         this.setState({
           notes: res.data,
+          error: false,
         });
       })
-      .catch(error => console.error('Error:', error));
+      .catch(() => {
+        toastr.error('Invalid Token, Please sign in to access this page');
+        this.setState({
+          error: true,
+        });
+        this.props.history.push('/');
+      });
   };
 
   deleteNote = (id) => {
-    const { notes } = this.state;
+    const { notes, token } = this.state;
     const newNotes = notes.filter(note => note.id !== id);
-    axios.delete(`api/notes/${id}`)
+    axios.delete(`api/notes/${id}`, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         this.setState({
           notes: newNotes,
@@ -72,10 +83,10 @@ class User extends React.Component {
   }
 
   updateNote = () => {
-    const { notes, noteEdit, indexEdit } = this.state;
+    const { notes, noteEdit, indexEdit, token } = this.state;
     const payload = { title: noteEdit.title, content: noteEdit.content };
     notes.splice(indexEdit, 1, noteEdit);
-    axios.put(`api/notes/${noteEdit.id}`, payload)
+    axios.put(`api/notes/${noteEdit.id}`, payload, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         this.setState({
           notes,
@@ -91,7 +102,7 @@ class User extends React.Component {
   }
 
   render() {
-    const { notes, noteEdit, isEditing } = this.state;
+    const { notes, noteEdit, isEditing, error } = this.state;
     return (
       <div className="page">
         <h1>My Notes</h1>

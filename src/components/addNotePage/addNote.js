@@ -9,6 +9,7 @@ class AddNote extends React.Component {
   state = {
     title: '',
     content: '',
+    token: localStorage.getItem('token'),
   }
 
   handleChange = (event) => {
@@ -20,9 +21,9 @@ class AddNote extends React.Component {
   };
 
   createNote =() => {
-    const { title, content } = this.state;
+    const { title, content, token } = this.state;
     const payload = { title, content };
-    axios.post('/api/notes', payload)
+    axios.post('/api/notes', payload, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         console.log('Note Added Succesfully');
         this.props.history.push('/notes');

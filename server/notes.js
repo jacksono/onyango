@@ -14,7 +14,7 @@ const ensureAuthenticated = (req, res, next) => {
   const token = header[1];
   authConfig.decodeToken(token, (err, payload) => {
     if (err) {
-      return res.status(401).send({ Message: err });
+      return res.status(401).send({ message: err });
     }
     return User.findOne({ where: { id: payload.sub } })
       .then((user) => {
