@@ -9,6 +9,7 @@ import Notes from './containers/notesPage/notes';
 import AddNote from './components/addNotePage/addNote';
 import ViewNote from './containers/viewNotePage/viewNote';
 import Register from './containers/usersPage/register';
+import SignIn from './containers/usersPage/signin';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/notes" component={Notes} />
           <Route path="/new" component={AddNote} />
           <Route path="/auth/register" component={Register} />
+          <Route path="/auth/signIn" component={SignIn} />
           <Route path="/view/:title" component={ViewNote} />
         </div>
       </Router>

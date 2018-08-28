@@ -11,22 +11,22 @@ toastr.options = {
   progressBar: true,
 };
 
-class Register extends React.Component {
+class SignIn extends React.Component {
   state = {
     username: '',
     password: '',
   };
 
-  createUser = () => {
+  signIn = () => {
     const { username, password } = this.state;
     axios
       .post(
-        '/api/auth/register',
+        '/api/auth/signIn',
         { username, password },
       )
       .then(() => {
         toastr.success('Registered Succesfully, You can now sign in');
-        this.props.history.push('/auth/signIn');
+        this.props.history.push('/notes');
       })
       .catch(error => console.error('Error:', error));
   };
@@ -43,7 +43,7 @@ class Register extends React.Component {
     const { username, password } = this.state;
     return (
       <div className="page">
-        <h1> Register </h1>
+        <h1> Sign In </h1>
         <Divider />
 
         <TextField
@@ -67,8 +67,8 @@ class Register extends React.Component {
         />
 
         <RaisedButton
-          onClick={this.createUser}
-          label="Register"
+          onClick={this.signIn}
+          label="Sign In"
           primary
           style={{ marginRight: '10px' }}
         />
@@ -82,4 +82,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default SignIn;
