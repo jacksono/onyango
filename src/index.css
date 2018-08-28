@@ -16,3 +16,19 @@ html {
   background-color: white;
   padding: 1rem
 }
+
+.title {
+  cursor: pointer;
+  color: gray;
+}
+.title:hover {
+  color: blue;
+}
+
+button:hover {
+  background-color: gray;
+}
+
+button {
+  cursor: pointer;
+}

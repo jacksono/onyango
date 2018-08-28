@@ -40,10 +40,20 @@ class User extends React.Component {
       });
   };
 
-  deleteNote = (id) => {
+  isAuthorized = (note) => {
+    if (note.userId.toString() === localStorage.getItem('id')) {
+      return true;
+    }
+    return false;
+  }
+
+  deleteNote = (note) => {
     const { notes, token } = this.state;
-    const newNotes = notes.filter(note => note.id !== id);
-    axios.delete(`api/notes/${id}`, { headers: { authorization: `Bearer ${token}` } })
+    const newNotes = notes.filter(noteItem => noteItem.id !== note.id);
+    if (!this.isAuthorized(note)) {
+      return toastr.error('Permission Denied');
+    }
+    axios.delete(`api/notes/${note.id}`, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         this.setState({
           notes: newNotes,
@@ -81,6 +91,10 @@ class User extends React.Component {
   editNote = (note) => {
     const { notes } = this.state;
     const index = notes.indexOf(note);
+    if (!this.isAuthorized(note)) {
+      toastr.error('Permission Denied');
+      return;
+    }
     this.setState({
       noteEdit: note,
       isEditing: true,
@@ -113,6 +127,13 @@ class User extends React.Component {
     });
   }
 
+  handleView = (note) => {
+    if (!this.isAuthorized(note)) {
+      return toastr.error('Permission Denied');
+    }
+    this.props.history.push(`/view/${note.id}`);
+  }
+
   render() {
     const { notes, noteEdit, isEditing, error } = this.state;
     return (
@@ -121,7 +142,7 @@ class User extends React.Component {
         <FloatingActionButton
           mini
           secondary
-          style={{ float: 'right', marginTop: '-3rem' }}
+          style={{ float: 'right', marginTop: '-60px' }}
           onClick={() => this.props.history.push('/new')}
         >
           <ContentAdd />
@@ -148,7 +169,13 @@ class User extends React.Component {
             <div>
               {notes.map(note => (
                 <span key={note.id}>
-                  <Link to={`/view/${note.id}`}>{note.title}</Link>
+                  <span
+                    role="presentation"
+                    onClick={() => this.handleView(note)}
+                    className="title"
+                  >
+                    {note.title}
+                  </span>
 
                   <div style={{ float: 'right' }}>
                     <button
@@ -160,7 +187,7 @@ class User extends React.Component {
 
                     <button
                       type="button"
-                      onClick={() => this.deleteNote(note.id)}
+                      onClick={() => this.deleteNote(note)}
                       style={{ marginLeft: '10px' }}
                     >
                       Delete
