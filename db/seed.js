@@ -1,19 +1,15 @@
+const bcrypt = require('bcryptjs');
 const db = require('../db');
+
 
 const seedUsers = () => db.Promise.map([
   {
-    title: 'Sir',
-    name: 'Mayombo Charles',
-    salary: 50000,
-    description: 'A good fellow',
-    age: 27,
+    username: 'Charles',
+    password: bcrypt.hashSync('pass', bcrypt.genSaltSync()),
   },
   {
-    title: 'Madam',
-    name: 'Benneth Neima',
-    salary: 60000,
-    description: 'A lucky lady',
-    age: 29,
+    username: 'Jane',
+    password: bcrypt.hashSync('pass2', bcrypt.genSaltSync()),
   },
 ], user => db.model('users').create(user));
 
