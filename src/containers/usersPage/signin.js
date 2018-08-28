@@ -25,7 +25,6 @@ class SignIn extends React.Component {
         { username, password },
       )
       .then(() => {
-        toastr.success('Registered Succesfully, You can now sign in');
         this.props.history.push('/notes');
       })
       .catch(error => console.error('Error:', error));
