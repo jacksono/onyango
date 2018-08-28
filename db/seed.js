@@ -4,12 +4,12 @@ const db = require('../db');
 
 const seedUsers = () => db.Promise.map([
   {
-    username: 'Charles',
-    password: bcrypt.hashSync('pass', bcrypt.genSaltSync()),
+    username: 'admin',
+    password: bcrypt.hashSync('email@email.com', bcrypt.genSaltSync()),
   },
   {
-    username: 'Jane',
-    password: bcrypt.hashSync('pass2', bcrypt.genSaltSync()),
+    username: 'medsender',
+    password: bcrypt.hashSync('email@email.com', bcrypt.genSaltSync()),
   },
 ], user => db.model('users').create(user));
 
@@ -17,6 +17,52 @@ const seedNotes = () => db.Promise.map([
   {
     title: 'Assesment',
     content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
+  },
+  {
+    title: 'Assesment',
+    content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
+  },
+  {
+    title: 'Assesment',
+    content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
+  },
+  {
+    title: 'Assesment',
+    content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
+  },
+  {
+    title: 'Assesment',
+    content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
   },
 ], note => db.model('notes').create(note));
 

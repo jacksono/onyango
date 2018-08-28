@@ -11,10 +11,13 @@
     },
   "plugins": ["import", "react"],
   "rules": {
-    "no-console": 0,
+    "no-console": 1,
+    "radix": 0,
+    "consistent-return": 0,
     "arrow-body-style": 0,
     "react/jsx-filename-extension": 0,
     "react/destructuring-assignment": 0,
-    "react/prop-types": 0,
+    "react/prop-types": 1,
+    "object-curly-newline": 1,
     }
 }

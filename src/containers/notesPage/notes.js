@@ -48,6 +48,12 @@ class User extends React.Component {
         this.setState({
           notes: newNotes,
         });
+      })
+      .catch((error) => {
+        if (error.response.status === 403) {
+          toastr.error(error.response.data.message);
+        }
+        console.error(error.response)
       });
   }
 
@@ -86,12 +92,18 @@ class User extends React.Component {
     const { notes, noteEdit, indexEdit, token } = this.state;
     const payload = { title: noteEdit.title, content: noteEdit.content };
     notes.splice(indexEdit, 1, noteEdit);
-    axios.put(`api/notes/${noteEdit.id}`, payload, { headers: { authorization: `Bearer ${token}` } })
+    axios.patch(`api/notes/${noteEdit.id}`, payload, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         this.setState({
           notes,
           isEditing: false,
         });
+      })
+      .catch((error) => {
+        if (error.response.status === 403) {
+          toastr.error(error.response.data.message);
+        }
+        console.error(error.response);
       });
   }
 
@@ -120,7 +132,7 @@ class User extends React.Component {
             <span>
               You have no notes yet.
               <Link to="/new"> Click here </Link>
-              to add some
+              to add your first one.
             </span>
           )}
         { isEditing
@@ -136,7 +148,7 @@ class User extends React.Component {
             <div>
               {notes.map(note => (
                 <span key={note.id}>
-                  <Link to={`/view/${note.title}`}>{note.title}</Link>
+                  <Link to={`/view/${note.id}`}>{note.title}</Link>
 
                   <div style={{ float: 'right' }}>
                     <button

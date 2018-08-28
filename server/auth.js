@@ -32,13 +32,14 @@ router.post('/signin', (req, res) => {
       return user;
     })
     .then((user) => {
-      return localAuth.encodeToken(user);
+      return [localAuth.encodeToken(user), user.id];
     })
-    .then((token) => {
+    .then((arr) => {
       res.status(200).send({
         message: 'Signed in Successfully',
         username: req.body.username,
-        token,
+        id: arr[1],
+        token: arr[0],
       });
     })
     .catch(error => console.error(error));

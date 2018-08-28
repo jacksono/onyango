@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/new" component={AddNote} />
           <Route path="/auth/register" component={Register} />
           <Route path="/auth/signIn" component={SignIn} />
-          <Route path="/view/:title" component={ViewNote} />
+          <Route path="/view/:id" component={ViewNote} />
         </div>
       </Router>
     </MuiThemeProvider>

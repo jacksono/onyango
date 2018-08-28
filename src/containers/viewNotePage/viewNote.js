@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import toastr from 'toastr';
 import Divider from 'material-ui/Divider';
 import EditNote from '../../components/editNotePage/editNote';
 
@@ -17,7 +18,7 @@ class ViewNote extends React.Component {
 
   componentDidMount() {
     const { token } = this.state;
-    axios.get(`/api/notes/${this.props.match.params.title}`, { headers: { authorization: `Bearer ${token}` } })
+    axios.get(`/api/notes/${this.props.match.params.id}`, { headers: { authorization: `Bearer ${token}` } })
       .then((res) => {
         this.setState({
           id: res.data.id,
@@ -26,7 +27,13 @@ class ViewNote extends React.Component {
           createdDate: res.data.created_at,
         });
       })
-      .catch(error => console.error(error));
+      .catch((error) => {
+        if (error.response.status === 403) {
+          toastr.error(error.response.data.message);
+          this.props.history.push('/notes');
+        }
+        console.error(error.response)
+      });
   }
 
   editNote = () => {
@@ -52,7 +59,7 @@ class ViewNote extends React.Component {
   updateNote = () => {
     const { title, content, id, token } = this.state;
     const payload = { title, content };
-    axios.put(`/api/notes/${id}`, payload, { headers: { authorization: `Bearer ${token}` } })
+    axios.patch(`/api/notes/${id}`, payload, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
         this.setState({
           isEditing: false,

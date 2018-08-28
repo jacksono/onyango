@@ -18,8 +18,6 @@ const db = new Sequelize(
     logging: false,
     define:
       {
-        // use snake_case column names
-        underscored: true,
         // automatically include timestamp columns
         timestamps: true,
       },

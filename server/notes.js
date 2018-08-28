@@ -18,6 +18,7 @@ const ensureAuthenticated = (req, res, next) => {
     }
     return User.findOne({ where: { id: payload.sub } })
       .then((user) => {
+        req.viewerId = user.id;
         next();
       })
       .catch(error => console.error('Error:', error));
@@ -25,6 +26,7 @@ const ensureAuthenticated = (req, res, next) => {
 };
 
 router.get('/', ensureAuthenticated, (req, res) => {
+  // where: { userId: req.viewerId },
   Note.findAll({ order: [['id', 'DESC']] })
     .then((result) => {
       res.status(200).send(result);
@@ -33,21 +35,28 @@ router.get('/', ensureAuthenticated, (req, res) => {
 });
 
 router.delete('/:id', ensureAuthenticated, (req, res) => {
-  if (req.params.id) {
-    Note.destroy({ where: { id: req.params.id } })
-      .then(() => {
-        res.status(200).send({ message: 'Note deleted' });
-      })
-      .catch(error => console.error(error));
-  } else {
-    res.status(400).send({ message: 'Invalid or missing parameter' });
-  }
+  Note.findById(parseInt(req.params.id))
+    .then((note) => {
+      if (note && note.userId !== req.viewerId) {
+        return res.status(403).send({ message: 'Permission Denied' });
+      }
+      if (req.params.id) {
+        Note.destroy({ where: { id: req.params.id } })
+          .then(() => {
+            res.status(200).send({ message: 'Note deleted' });
+          })
+          .catch(error => console.error(error));
+      } else {
+        res.status(400).send({ message: 'Invalid or missing parameter' });
+      }
+    });
 });
 
 router.post('/', ensureAuthenticated, (req, res) => {
   Note.create({
     title: req.body.title,
     content: req.body.content,
+    userId: req.body.userId,
   })
     .then((response) => {
       res.status(201).send(response);
@@ -55,21 +64,30 @@ router.post('/', ensureAuthenticated, (req, res) => {
     .catch(error => console.error(error));
 });
 
-router.put('/:id', ensureAuthenticated, (req, res) => {
-  Note.update(
-    { title: req.body.title, content: req.body.content },
-    { where: { id: req.params.id } },
-  )
-    .then((response) => {
-      res.status(200).send(response);
-    })
-    .catch(error => console.error(error));
+router.patch('/:id', ensureAuthenticated, (req, res) => {
+  Note.findById(parseInt(req.params.id))
+    .then((note) => {
+      if (note && note.userId !== req.viewerId) {
+        return res.status(403).send({ message: 'Permission Denied' });
+      }
+      Note.update(
+        { title: req.body.title, content: req.body.content },
+        { where: { id: req.params.id } },
+      )
+        .then((response) => {
+          res.status(200).send(response);
+        })
+        .catch(error => console.error(error));
+    });
 });
 
-router.get('/:title', ensureAuthenticated, (req, res) => {
-  Note.findOne({ where: { title: req.params.title } })
-    .then((response) => {
-      res.status(200).send(response);
+router.get('/:id', ensureAuthenticated, (req, res) => {
+  Note.findOne({ where: { id: req.params.id } })
+    .then((note) => {
+      if (note && note.userId !== req.viewerId) {
+        return res.status(403).send({ message: 'Permission Denied' });
+      }
+      res.status(200).send(note);
     })
     .catch(error => console.error(error));
 });
