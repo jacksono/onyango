@@ -19,18 +19,28 @@ class SignIn extends React.Component {
 
   signIn = () => {
     const { username, password } = this.state;
-    axios
-      .post(
-        '/api/auth/signIn',
-        { username, password },
-      )
-      .then((response) => {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('username', response.data.username);
-        localStorage.setItem('id', response.data.id);
-        this.props.history.push('/notes');
-      })
-      .catch(error => console.error('Error:', error));
+    if (username.trim() && password.trim()) {
+      axios
+        .post(
+          '/api/auth/signIn',
+          { username, password },
+        )
+        .then((response) => {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('username', response.data.username);
+          localStorage.setItem('id', response.data.id);
+          this.props.history.push('/notes');
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            toastr.error(error.response.data.message);
+          } else {
+            toastr.error('Internal Server Error');
+          }
+        });
+    } else {
+      toastr.error('Please fill in both fields');
+    }
   };
 
   handleChange = (event) => {
@@ -62,6 +72,7 @@ class SignIn extends React.Component {
           id="password"
           floatingLabelText="Password"
           name="password"
+          type="password"
           hintText="Enter password"
           value={password}
           onChange={this.handleChange}

@@ -12,6 +12,10 @@ const verifyPassword = (userPassword, databasePassword) => {
 router.post('/register', (req, res) => {
   const salt = bcrypt.genSaltSync();
   const hash = bcrypt.hashSync(req.body.password, salt);
+  if (!(req.body.username && req.body.password)) {
+    res.status(400).send({ message: 'Missing argument(s)' });
+    return;
+  }
   User.create({
     username: req.body.username,
     password: hash,
@@ -22,12 +26,19 @@ router.post('/register', (req, res) => {
     .then((token) => {
       res.status(201).send({ message: 'Registered Successfully', token });
     })
-    .catch(error => console.error(error));
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send({ message: 'Server Error' });
+    });
 });
 
 router.post('/signin', (req, res) => {
   User.findOne({ where: { username: req.body.username } })
     .then((user) => {
+      if (!user) {
+        res.status(401).send({ message: 'Invalid Credentials' });
+        return;
+      }
       verifyPassword(req.body.password, user.password);
       return user;
     })
@@ -42,7 +53,12 @@ router.post('/signin', (req, res) => {
         token: arr[0],
       });
     })
-    .catch(error => console.error(error));
+    .catch((error) => {
+      if (error.message === 'Wrong Password') {
+        res.status(401).send({ message: 'Invalid Credentials' });
+        console.error(error);
+      }
+    });
 });
 
 module.exports = router;

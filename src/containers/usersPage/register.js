@@ -19,6 +19,10 @@ class Register extends React.Component {
 
   createUser = () => {
     const { username, password } = this.state;
+    if (!(username.trim() && password.trim())) {
+      toastr.error('Please fill in both fields');
+      return;
+    }
     axios
       .post(
         '/api/auth/register',
@@ -28,7 +32,10 @@ class Register extends React.Component {
         toastr.success('Registered Succesfully, You can now sign in');
         this.props.history.push('/auth/signIn');
       })
-      .catch(error => console.error('Error:', error));
+      .catch((error) => {
+        toastr.error('Internal Server Error');
+        console.error('Error:', error)
+      });
   };
 
   handleChange = (event) => {
@@ -60,6 +67,7 @@ class Register extends React.Component {
           id="password"
           floatingLabelText="Password"
           name="password"
+          type="password"
           hintText="Enter password"
           value={password}
           onChange={this.handleChange}
