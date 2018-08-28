@@ -3,6 +3,13 @@ import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
+import toastr from 'toastr';
+import '../../../node_modules/toastr/build/toastr.css';
+
+toastr.options = {
+  closeButton: true,
+  progressBar: true,
+};
 
 class User extends React.Component {
   state = {
@@ -18,8 +25,8 @@ class User extends React.Component {
         { username, password },
       )
       .then(() => {
+        toastr.success('Registered Succesfully, You can now sign in');
         this.props.history.push('/auth/signIn');
-        alert("Registered Successfully, You may now Sign in")
       })
       .catch(error => console.error('Error:', error));
   };
@@ -67,7 +74,7 @@ class User extends React.Component {
         />
 
         <RaisedButton
-          onClick={this.handleCancel}
+          onClick={() => this.props.history.push('/')}
           label="Cancel"
         />
       </div>
