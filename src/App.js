@@ -8,6 +8,7 @@ import Users from './containers/usersPage/users';
 import Notes from './containers/notesPage/notes';
 import AddNote from './components/addNotePage/addNote';
 import ViewNote from './containers/viewNotePage/viewNote';
+import Register from './containers/usersPage/register';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/users" component={Users} />
           <Route path="/notes" component={Notes} />
           <Route path="/new" component={AddNote} />
+          <Route path="/auth/register" component={Register} />
           <Route path="/view/:title" component={ViewNote} />
         </div>
       </Router>
