@@ -26,12 +26,19 @@ const ensureAuthenticated = (req, res, next) => {
 };
 
 router.get('/', ensureAuthenticated, (req, res) => {
-  // where: { userId: req.viewerId },
-  Note.findAll({ order: [['id', 'DESC']] })
-    .then((result) => {
-      res.status(200).send(result);
-    })
-    .catch(error => console.error(error));
+  if (req.query.q && req.query.q === 'all') {
+    Note.findAll({ order: [['id', 'DESC']] })
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch(error => console.error(error));
+  } else {
+    Note.findAll({ where: { userId: req.viewerId }, order: [['id', 'DESC']] })
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch(error => console.error(error));
+  }
 });
 
 router.delete('/:id', ensureAuthenticated, (req, res) => {

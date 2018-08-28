@@ -19,7 +19,22 @@ const Header = ({ history }) => {
               <div>
                 <span style={{ float: 'right', marginTop: '-30px' }}>{`Signed in as ${localStorage.getItem('username')}`}</span>
                 <nav>
-                  <span style={{ marginLeft: '10px' }}><Link to="/notes">My Notes</Link></span>
+                  <span
+                    style={{ marginLeft: '10px' }}
+                  >
+                    <Link to="/home">
+                      Home
+                    </Link>
+                  </span>
+
+                  <span
+                    style={{ marginLeft: '10px' }}
+                  >
+                    <Link to="/notes">
+                      My Notes
+                    </Link>
+                  </span>
+
                   <span>
                     <Link
                       to="/"
