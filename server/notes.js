@@ -74,6 +74,11 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/', ensureAuthenticated, (req, res) => {
+  const Exp = /^([0-9]+[\s]*|[a-z]+[\s]*)+([0-9a-z]+)$/i;
+  if (!req.body.title.match(Exp)) {
+    res.status(400).send({ message: 'Title can only contain letters and numbers' });
+    return;
+  }
   Note.create({
     title: req.body.title,
     content: req.body.content,
@@ -93,10 +98,18 @@ router.post('/', ensureAuthenticated, (req, res) => {
 });
 
 router.patch('/:id', ensureAuthenticated, (req, res) => {
+  const Exp = /^([0-9]+[\s]*|[a-z]+[\s]*)+([0-9a-z]+)$/i;
   Note.findById(parseInt(req.params.id))
     .then((note) => {
-      if (note && note.userId !== req.viewerId) {
+      if (!note) {
+        return res.status(404).send({ message: 'Note does not exist' });
+      }
+      if (note.userId !== req.viewerId) {
         return res.status(403).send({ message: 'Permission Denied' });
+      }
+      if (!req.body.title.match(Exp)) {
+        res.status(400).send({ message: 'Title can only contain letters and numbers' });
+        return;
       }
       Note.update(
         { title: req.body.title, content: req.body.content },
