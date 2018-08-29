@@ -28,7 +28,13 @@ const ensureAuthenticated = (req, res, next) => {
 
 router.get('/', ensureAuthenticated, (req, res) => {
   if (req.query.q && req.query.q === 'all') {
-    Note.findAll({ order: [['id', 'DESC']] })
+    Note.findAll({
+      order: [['id', 'DESC']],
+      where: {
+        userId: { $ne: req.viewerId },
+      },
+      attributes: ['id', 'title', 'createdAt', 'updatedAt', 'userId'],
+    })
       .then((result) => {
         res.status(200).send(result);
       })
