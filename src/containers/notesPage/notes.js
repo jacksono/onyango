@@ -114,7 +114,7 @@ class User extends React.Component {
       toastr.error('Please fill in both fields');
       return;
     }
-    if (!noteEdit.title.match(Exp)) {
+    if (!noteEdit.title.trim().match(Exp)) {
       toastr.error('Title can only contain letters and numbers');
       return;
     }

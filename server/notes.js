@@ -113,7 +113,7 @@ router.patch('/:id', ensureAuthenticated, (req, res) => {
       if (note.userId !== req.viewerId) {
         return res.status(403).send({ message: 'Permission Denied' });
       }
-      if (!req.body.title.match(Exp)) {
+      if (!req.body.title.trim().match(Exp)) {
         res.status(400).send({ message: 'Title can only contain letters and numbers' });
         return;
       }
