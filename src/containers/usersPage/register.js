@@ -39,8 +39,12 @@ class Register extends React.Component {
         toastr.success('Registered Succesfully, You can now sign in');
         history.push('/auth/signIn');
       })
-      .catch(() => {
-        toastr.error('Internal Server Error');
+      .catch((error) => {
+        if (error.response.status === 400 || error.response.status === 409) {
+          toastr.error(error.response.data.message);
+        } else {
+          toastr.error('Internal Servor Error');
+        }
       });
   };
 

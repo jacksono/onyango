@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const localAuth = require('./authConfig');
 const User = require('../db/models/user');
 
+/* eslint no-console: 0 */
+
 const verifyPassword = (userPassword, databasePassword) => {
   const bool = bcrypt.compareSync(userPassword, databasePassword);
   if (!bool) throw new Error('Wrong Password');
@@ -12,8 +14,13 @@ const verifyPassword = (userPassword, databasePassword) => {
 router.post('/register', (req, res) => {
   const salt = bcrypt.genSaltSync();
   const hash = bcrypt.hashSync(req.body.password, salt);
+  const Exp = /^([0-9]|[a-z])+([0-9a-z]+)$/i;
   if (!(req.body.username && req.body.password)) {
     res.status(400).send({ message: 'Missing argument(s)' });
+    return;
+  }
+  if (!req.body.username.match(Exp)) {
+    res.status(400).send({ message: 'Username can only contain numbers and letters' });
     return;
   }
   User.create({
@@ -27,8 +34,12 @@ router.post('/register', (req, res) => {
       res.status(201).send({ message: 'Registered Successfully', token });
     })
     .catch((error) => {
+      if (error.constructor.name === 'UniqueConstraintError') {
+        res.status(409).send({ message: 'Username already taken' });
+      } else {
+        res.status(500).send({ message: 'Internal Server Error' });
+      }
       console.error(error);
-      res.status(500).send({ message: 'Server Error' });
     });
 });
 
