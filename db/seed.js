@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const db = require('../db');
 
-
+/* eslint no-console:0 */
 const seedUsers = () => db.Promise.map([
   {
     username: 'admin',
