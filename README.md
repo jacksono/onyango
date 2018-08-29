@@ -2,6 +2,8 @@
 # NOTES MANAGER
 
 ## A light weight tool to take your notes
+Sometimes you just want to take quick note and save it somewhere. This app helps you do just that
+Try it out on the [here](https://onyango.herokuapp.com/)
 
 ## How to Install and Set it up
 Clone the repo from GitHub:
@@ -36,9 +38,9 @@ To interact directly with the API you may use [Postman](https://chrome.google.co
 
 ## API Endpoints
 
-| Resource URL | Methods | Description | Requires Token |
-| -------- | ------------- | --------- |--------------- |
-| `/api/auth/register/` | POST  | User registration | FALSE |
+| Resource URL | Methods | Description | Requires Token || Payload       |
+| -------- | ------------- | --------- |--------------- |--------------- |
+| `/api/auth/register/` | POST  | User registration | FALSE | N/A   |
 |  `/api/auth/signIn/` | POST | User login | FALSE |
 |  `/api/notes` | POST | Change Username | TRUE |
 | `/api/notes/` | GET | List user's notes | TRUE |
