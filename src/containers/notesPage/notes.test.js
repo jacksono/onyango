@@ -2,14 +2,14 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { BrowserRouter as Router } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Home from './home';
+import Notes from './notes';
 /* eslint no-undef:0 */
-test('Home page renders correctly', () => {
+test('Notes page renders correctly', () => {
   const tree = renderer
     .create(
       <MuiThemeProvider>
         <Router>
-          <Home />
+          <Notes history={{}} />
         </Router>
       </MuiThemeProvider>,
     )

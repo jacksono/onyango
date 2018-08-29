@@ -19,7 +19,9 @@ class User extends React.Component {
   };
 
   componentDidMount() {
-    this.fetchdata();
+    if (process.env.NODE_ENV !== 'test') {
+      this.fetchdata();
+    }
   }
 
   fetchdata = () => {

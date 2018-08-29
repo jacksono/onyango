@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders correctly 1`] = `
+<div
+  className="header"
+>
+  <h1>
+    Notes Manager
+  </h1>
+  <div>
+    <nav>
+      <span>
+        <a
+          href="/auth/signIn"
+          onClick={[Function]}
+        >
+          Sign In
+        </a>
+      </span>
+      <span
+        style={
+          Object {
+            "marginLeft": "10px",
+          }
+        }
+      >
+        <a
+          href="/auth/register"
+          onClick={[Function]}
+        >
+          Register
+        </a>
+      </span>
+    </nav>
+  </div>
+</div>
+`;

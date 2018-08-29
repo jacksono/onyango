@@ -2,14 +2,14 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { BrowserRouter as Router } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Home from './home';
+import Header from './header';
 /* eslint no-undef:0 */
-test('Home page renders correctly', () => {
+test('Header renders correctly', () => {
   const tree = renderer
     .create(
       <MuiThemeProvider>
         <Router>
-          <Home />
+          <Header />
         </Router>
       </MuiThemeProvider>,
     )

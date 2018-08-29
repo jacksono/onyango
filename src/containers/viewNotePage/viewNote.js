@@ -18,25 +18,27 @@ class ViewNote extends React.Component {
   }
 
   componentDidMount() {
-    const { token } = this.state;
-    const { match, history } = this.props;
-    axios.get(`/api/notes/${match.params.id}`, { headers: { authorization: `Bearer ${token}` } })
-      .then((res) => {
-        this.setState({
-          id: res.data.id,
-          title: res.data.title,
-          content: res.data.content,
-          createdDate: res.data.created_at,
+    if (process.env.NODE_ENV !== 'test') {
+      const { token } = this.state;
+      const { match, history } = this.props;
+      axios.get(`/api/notes/${match.params.id}`, { headers: { authorization: `Bearer ${token}` } })
+        .then((res) => {
+          this.setState({
+            id: res.data.id,
+            title: res.data.title,
+            content: res.data.content,
+            createdDate: res.data.created_at,
+          });
+        })
+        .catch((error) => {
+          if (error.response.status === 403) {
+            toastr.error(error.response.data.message);
+            history.push('/notes');
+          } else {
+            toastr.error('Internal Server Error');
+          }
         });
-      })
-      .catch((error) => {
-        if (error.response.status === 403) {
-          toastr.error(error.response.data.message);
-          history.push('/notes');
-        } else {
-          toastr.error('Internal Server Error');
-        }
-      });
+    }
   }
 
   editNote = () => {

@@ -29,7 +29,11 @@ const EditNote = (props) => {
         rows={3}
         fullWidth
         onChange={handleChange}
-        style={{ display: 'block', border: '1px solid whitesmoke', borderBottom: 'none' }}
+        style={{
+          display: 'block',
+          border: '1px solid whitesmoke',
+          borderBottom: 'none',
+        }}
       />
 
       <RaisedButton

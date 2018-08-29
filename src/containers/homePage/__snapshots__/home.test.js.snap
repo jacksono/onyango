@@ -1,9 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Home renders correctly 1`] = `
-<div>
-  <p>
-     Magic goes here 
-  </p>
+exports[`Home page renders correctly 1`] = `
+<div
+  className="page"
+>
+  <h1>
+    Note Titles By Others
+  </h1>
+  <hr
+    style={
+      Object {
+        "backgroundColor": "#e0e0e0",
+        "border": "none",
+        "height": 1,
+        "margin": 0,
+        "marginBottom": "10px",
+        "marginLeft": 0,
+        "marginTop": -1,
+        "muiPrepared": true,
+      }
+    }
+  />
+  <span>
+    There are no notes yet.
+    <a
+      href="/new"
+      onClick={[Function]}
+    >
+       Click here 
+    </a>
+    to add the first one.
+  </span>
+  <div />
 </div>
 `;

@@ -14,7 +14,9 @@ class Home extends React.Component {
   };
 
   componentDidMount() {
-    this.fetchdata();
+    if (process.env.NODE_ENV !== 'test') {
+      this.fetchdata();
+    }
   }
 
   fetchdata = () => {
@@ -70,9 +72,12 @@ class Home extends React.Component {
     );
   }
 }
+Home.defaultProps = {
+  history: null,
+};
 
 Home.propTypes = {
-  history: PropTypes.object.isRequired,
+  history: PropTypes.object,
 };
 
 export default Home;

@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`View note page renders correctly 1`] = `
+<div
+  className="page"
+>
+  <div>
+    <div
+      style={
+        Object {
+          "float": "right",
+        }
+      }
+    >
+      <button
+        onClick={[Function]}
+        type="button"
+      >
+        Edit
+      </button>
+      <button
+        onClick={[Function]}
+        style={
+          Object {
+            "marginLeft": "10px",
+          }
+        }
+        type="button"
+      >
+        Delete
+      </button>
+    </div>
+    <h1>
+      
+    </h1>
+    <span
+      style={
+        Object {
+          "float": "right",
+          "marginTop": "-20px",
+        }
+      }
+    >
+      Written on Invalid date
+    </span>
+    <hr
+      style={
+        Object {
+          "backgroundColor": "#e0e0e0",
+          "border": "none",
+          "height": 1,
+          "margin": 0,
+          "marginLeft": 0,
+          "marginTop": -1,
+          "muiPrepared": true,
+        }
+      }
+    />
+    <p>
+      
+    </p>
+  </div>
+</div>
+`;
