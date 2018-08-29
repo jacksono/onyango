@@ -29,7 +29,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "seed": "node db/seed.js",
-    "api_test": "jest --runInBand /server",
+    "api-test": "jest --runInBand /server",
     "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
