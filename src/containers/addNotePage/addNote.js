@@ -27,6 +27,11 @@ class AddNote extends React.Component {
     const {
       title, content, token, userId,
     } = this.state;
+    const Exp = /^([0-9]+[\s]*|[a-z]+[\s]*)+([0-9a-z]+)$/i;
+    if (!title.match(Exp)) {
+      toastr.error('Title can only contain letters and numbers');
+      return;
+    }
     if (!(title && content)) {
       toastr.error('Please fill in both fields');
       return;

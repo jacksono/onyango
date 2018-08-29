@@ -21,6 +21,11 @@ class Register extends React.Component {
   createUser = () => {
     const { username, password } = this.state;
     const { history } = this.props;
+    const Exp = /^([0-9]|[a-z])+([0-9a-z]+)$/i;
+    if (!username.match(Exp)) {
+      toastr.error('Username can only contain numbers and letters');
+      return;
+    }
     if (!(username.trim() && password.trim())) {
       toastr.error('Please fill in both fields');
       return;

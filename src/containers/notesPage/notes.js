@@ -9,6 +9,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import EditNote from '../../components/editNotePage/editNote';
 
+
 class User extends React.Component {
   state = {
     notes: [],
@@ -106,6 +107,15 @@ class User extends React.Component {
     const {
       notes, noteEdit, indexEdit, token,
     } = this.state;
+    const Exp = /^([0-9]+[\s]*|[a-z]+[\s]*)+([0-9a-z]+)$/i;
+    if (!(noteEdit.title.trim() && noteEdit.content.trim())) {
+      toastr.error('Please fill in both fields');
+      return;
+    }
+    if (!noteEdit.title.match(Exp)) {
+      toastr.error('Title can only contain letters and numbers');
+      return;
+    }
     const payload = { title: noteEdit.title, content: noteEdit.content };
     notes.splice(indexEdit, 1, noteEdit);
     axios.patch(`api/notes/${noteEdit.id}`, payload, { headers: { authorization: `Bearer ${token}` } })
