@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toastr from 'toastr';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -14,7 +15,6 @@ class Home extends React.Component {
     notes: [],
     isEditing: false,
     noteEdit: '',
-    error: true,
     token: localStorage.getItem('token'),
   };
 
@@ -24,20 +24,19 @@ class Home extends React.Component {
 
   fetchdata = () => {
     const { token } = this.state;
+    const { history } = this.props;
     axios
       .get('/api/notes?q=all', { headers: { authorization: `Bearer ${token}` } })
       .then((res) => {
         this.setState({
           notes: res.data,
-          error: false,
         });
       })
       .catch(() => {
         toastr.error('Invalid Token, Please sign in to access this page');
         this.setState({
-          error: true,
         });
-        this.props.history.push('/');
+        history.push('/');
       });
   };
 
@@ -64,7 +63,6 @@ class Home extends React.Component {
         if (error.response.status === 403) {
           toastr.error(error.response.data.message);
         } else {
-          console.error(error.response);
           toastr.error('Internal Server Error');
         }
       });
@@ -106,7 +104,9 @@ class Home extends React.Component {
   }
 
   updateNote = () => {
-    const { notes, noteEdit, indexEdit, token } = this.state;
+    const {
+      notes, noteEdit, indexEdit, token,
+    } = this.state;
     const payload = { title: noteEdit.title, content: noteEdit.content };
     notes.splice(indexEdit, 1, noteEdit);
     axios.patch(`api/notes/${noteEdit.id}`, payload, { headers: { authorization: `Bearer ${token}` } })
@@ -121,7 +121,6 @@ class Home extends React.Component {
           toastr.error(error.response.data.message);
         } else {
           toastr.error('Internal Server Error');
-          console.error(error.response);
         }
       });
   }
@@ -133,14 +132,18 @@ class Home extends React.Component {
   }
 
   handleView = (note) => {
+    const { history } = this.props;
     if (!this.isAuthorized(note)) {
       return toastr.error('Permission Denied');
     }
-    this.props.history.push(`/view/${note.id}`);
+    history.push(`/view/${note.id}`);
   }
 
   render() {
-    const { notes, noteEdit, isEditing, error } = this.state;
+    const { history } = this.props;
+    const {
+      notes, noteEdit, isEditing,
+    } = this.state;
     return (
       <div className="page">
         <h1>All Note Titles</h1>
@@ -148,7 +151,7 @@ class Home extends React.Component {
           mini
           secondary
           style={{ float: 'right', marginTop: '-60px' }}
-          onClick={() => this.props.history.push('/new')}
+          onClick={() => history.push('/new')}
         >
           <ContentAdd />
         </FloatingActionButton>
@@ -181,7 +184,9 @@ class Home extends React.Component {
                   >
                     {note.title}
                   </span>
-                  <span> {`( ${moment(note.created_at).format('LL')} )`} </span>
+                  <span>
+                    {`( ${moment(note.created_at).format('LL')} )`}
+                  </span>
                   <div style={{ float: 'right' }}>
                     <button
                       type="button"
@@ -211,5 +216,9 @@ class Home extends React.Component {
     );
   }
 }
+
+Home.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 
 export default Home;

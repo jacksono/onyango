@@ -1,9 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 const EditNote = (props) => {
-  const { noteEdit, handleChange } = props;
+  const {
+    noteEdit, handleChange, updateNote, handleCancel,
+  } = props;
   return (
     <div>
 
@@ -30,17 +33,24 @@ const EditNote = (props) => {
       />
 
       <RaisedButton
-        onClick={props.updateNote}
+        onClick={updateNote}
         label="Update Note"
         primary
         style={{ marginRight: '10px' }}
       />
       <RaisedButton
-        onClick={props.handleCancel}
+        onClick={handleCancel}
         label="Cancel"
       />
     </div>
   );
+};
+
+EditNote.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  noteEdit: PropTypes.object.isRequired,
+  updateNote: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired,
 };
 
 export default EditNote;

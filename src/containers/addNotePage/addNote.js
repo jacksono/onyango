@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import toastr from 'toastr';
-
+import PropTypes from 'prop-types';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
@@ -23,7 +23,10 @@ class AddNote extends React.Component {
   };
 
   createNote =() => {
-    const { title, content, token, userId } = this.state;
+    const { history } = this.props;
+    const {
+      title, content, token, userId,
+    } = this.state;
     if (!(title && content)) {
       toastr.error('Please fill in both fields');
       return;
@@ -31,17 +34,17 @@ class AddNote extends React.Component {
     const payload = { title, content, userId };
     axios.post('/api/notes', payload, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
-        console.log('Note Added Succesfully');
-        this.props.history.push('/notes');
+        toastr.success('Note Added Succesfully');
+        history.push('/notes');
       })
-      .catch((error) => {
+      .catch(() => {
         toastr.error('Internal Server Error');
-        console.error('Error:', error);
       });
   }
 
   render() {
     const { title, content } = this.state;
+    const { history } = this.props;
     return (
       <div className="page">
         <h1> Add Note </h1>
@@ -75,12 +78,16 @@ class AddNote extends React.Component {
           style={{ marginRight: '10px' }}
         />
         <RaisedButton
-          onClick={() => this.props.history.push('/notes')}
+          onClick={() => history.push('/notes')}
           label="Cancel"
         />
       </div>
     );
   }
 }
+
+AddNote.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 
 export default AddNote;

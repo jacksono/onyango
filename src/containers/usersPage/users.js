@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import toastr from 'toastr';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
@@ -22,7 +23,7 @@ class User extends React.Component {
             msg: res.data.message,
           });
         })
-        .catch(error => console.error('Error:', error));
+        .catch(() => toastr.error('Internal Server Error'));
       this.fetchdata();
     }
   }
@@ -38,7 +39,7 @@ class User extends React.Component {
       .then(() => {
         this.fetchFirst();
       })
-      .catch(error => console.error('Error:', error));
+      .catch(() => toastr.error('Internal Server Error'));
   };
 
   fetchFirst = () => {
@@ -50,7 +51,7 @@ class User extends React.Component {
           first: res.data,
         });
       })
-      .catch(error => console.error('Error:', error));
+      .catch(() => toastr.error('Internal Server Error'));
   };
 
   createUser = () => {
@@ -59,12 +60,12 @@ class User extends React.Component {
       .post(
         '/api/users',
         { name: newUser, title: 'Sir' },
-        { headers: { 'authorization': 'header' } },
+        { headers: { authorization: 'header' } },
       )
       .then(() => {
         this.fetchdata();
       })
-      .catch(error => console.error('Error:', error));
+      .catch(() => toastr.error('Internal Server Error'));
   };
 
   update = () => {
@@ -76,7 +77,7 @@ class User extends React.Component {
       .then(() => {
         this.fetchdata();
       })
-      .catch(error => console.error('Error:', error));
+      .catch(() => toastr.error('Internal Server Error'));
   };
 
   deleteLast = () => {
@@ -86,7 +87,7 @@ class User extends React.Component {
       .then(() => {
         this.fetchdata();
       })
-      .catch(error => console.error('Error:', error));
+      .catch(() => toastr.error('Internal Server Error'));
   };
 
   handleChange = (event) => {

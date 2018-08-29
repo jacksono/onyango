@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
@@ -19,6 +20,7 @@ class SignIn extends React.Component {
 
   signIn = () => {
     const { username, password } = this.state;
+    const { history } = this.props;
     if (username.trim() && password.trim()) {
       axios
         .post(
@@ -29,7 +31,7 @@ class SignIn extends React.Component {
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('username', response.data.username);
           localStorage.setItem('id', response.data.id);
-          this.props.history.push('/notes');
+          history.push('/notes');
         })
         .catch((error) => {
           if (error.response.status === 401) {
@@ -53,6 +55,7 @@ class SignIn extends React.Component {
 
   render() {
     const { username, password } = this.state;
+    const { history } = this.props;
     return (
       <div className="page">
         <h1> Sign In </h1>
@@ -87,12 +90,16 @@ class SignIn extends React.Component {
         />
 
         <RaisedButton
-          onClick={() => this.props.history.push('/')}
+          onClick={() => history.push('/')}
           label="Cancel"
         />
       </div>
     );
   }
 }
+
+SignIn.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 
 export default SignIn;

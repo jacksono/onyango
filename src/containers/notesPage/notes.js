@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import toastr from 'toastr';
 import Divider from 'material-ui/Divider';
@@ -13,7 +14,6 @@ class User extends React.Component {
     notes: [],
     isEditing: false,
     noteEdit: '',
-    error: true,
     token: localStorage.getItem('token'),
   };
 
@@ -23,20 +23,19 @@ class User extends React.Component {
 
   fetchdata = () => {
     const { token } = this.state;
+    const { history } = this.props;
     axios
       .get('/api/notes', { headers: { authorization: `Bearer ${token}` } })
       .then((res) => {
         this.setState({
           notes: res.data,
-          error: false,
         });
       })
       .catch(() => {
         toastr.error('Invalid Token, Please sign in to access this page');
         this.setState({
-          error: true,
         });
-        this.props.history.push('/');
+        history.push('/');
       });
   };
 
@@ -63,7 +62,6 @@ class User extends React.Component {
         if (error.response.status === 403) {
           toastr.error(error.response.data.message);
         } else {
-          console.error(error.response);
           toastr.error('Internal Server Error');
         }
       });
@@ -105,7 +103,9 @@ class User extends React.Component {
   }
 
   updateNote = () => {
-    const { notes, noteEdit, indexEdit, token } = this.state;
+    const {
+      notes, noteEdit, indexEdit, token,
+    } = this.state;
     const payload = { title: noteEdit.title, content: noteEdit.content };
     notes.splice(indexEdit, 1, noteEdit);
     axios.patch(`api/notes/${noteEdit.id}`, payload, { headers: { authorization: `Bearer ${token}` } })
@@ -119,7 +119,6 @@ class User extends React.Component {
         if (error.response.status === 403) {
           toastr.error(error.response.data.message);
         } else {
-          console.error(error.response);
           toastr.error('Internal Servor Error');
         }
       });
@@ -132,14 +131,18 @@ class User extends React.Component {
   }
 
   handleView = (note) => {
+    const { history } = this.props;
     if (!this.isAuthorized(note)) {
       return toastr.error('Permission Denied');
     }
-    this.props.history.push(`/view/${note.id}`);
+    history.push(`/view/${note.id}`);
   }
 
   render() {
-    const { notes, noteEdit, isEditing, error } = this.state;
+    const { history } = this.props;
+    const {
+      notes, noteEdit, isEditing,
+    } = this.state;
     return (
       <div className="page">
         <h1>My Notes</h1>
@@ -147,7 +150,7 @@ class User extends React.Component {
           mini
           secondary
           style={{ float: 'right', marginTop: '-60px' }}
-          onClick={() => this.props.history.push('/new')}
+          onClick={() => history.push('/new')}
         >
           <ContentAdd />
         </FloatingActionButton>
@@ -210,5 +213,7 @@ class User extends React.Component {
     );
   }
 }
-
+User.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 export default User;

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
@@ -19,6 +20,7 @@ class Register extends React.Component {
 
   createUser = () => {
     const { username, password } = this.state;
+    const { history } = this.props;
     if (!(username.trim() && password.trim())) {
       toastr.error('Please fill in both fields');
       return;
@@ -30,11 +32,10 @@ class Register extends React.Component {
       )
       .then(() => {
         toastr.success('Registered Succesfully, You can now sign in');
-        this.props.history.push('/auth/signIn');
+        history.push('/auth/signIn');
       })
-      .catch((error) => {
+      .catch(() => {
         toastr.error('Internal Server Error');
-        console.error('Error:', error);
       });
   };
 
@@ -48,6 +49,7 @@ class Register extends React.Component {
 
   render() {
     const { username, password } = this.state;
+    const { history } = this.props;
     return (
       <div className="page">
         <h1> Register </h1>
@@ -82,12 +84,16 @@ class Register extends React.Component {
         />
 
         <RaisedButton
-          onClick={() => this.props.history.push('/')}
+          onClick={() => history.push('/')}
           label="Cancel"
         />
       </div>
     );
   }
 }
+
+Register.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 
 export default Register;
