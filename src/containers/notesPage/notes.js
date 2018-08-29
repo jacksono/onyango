@@ -117,16 +117,16 @@ class User extends React.Component {
       return;
     }
     const payload = { title: noteEdit.title, content: noteEdit.content };
-    notes.splice(indexEdit, 1, noteEdit);
     axios.patch(`api/notes/${noteEdit.id}`, payload, { headers: { authorization: `Bearer ${token}` } })
       .then(() => {
+        notes.splice(indexEdit, 1, noteEdit);
         this.setState({
           notes,
           isEditing: false,
         });
       })
       .catch((error) => {
-        if (error.response.status === 403) {
+        if (error.response.status === 403 || error.response.status === 409) {
           toastr.error(error.response.data.message);
         } else {
           toastr.error('Internal Servor Error');

@@ -3,6 +3,7 @@ const router = require('express').Router();
 const db = require('../db'); /*eslint-disable-line */
 const User = require('../db/models/user');
 
+/* eslint no-console: 0 */
 router.get('/', (req, res) => {
   User.findAll({ order: [['id', 'DESC']] })
     .then((result) => {

@@ -42,8 +42,12 @@ class AddNote extends React.Component {
         toastr.success('Note Added Succesfully');
         history.push('/notes');
       })
-      .catch(() => {
-        toastr.error('Internal Server Error');
+      .catch((error) => {
+        if (error.response.status === 409) {
+          toastr.error(error.response.data.message);
+        } else {
+          toastr.error('Internal Server Error');
+        }
       });
   }
 

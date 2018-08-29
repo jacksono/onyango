@@ -74,6 +74,13 @@ class ViewNote extends React.Component {
         this.setState({
           isEditing: false,
         });
+      })
+      .catch((error) => {
+        if (error.response.status === 403 || error.response.status === 409) {
+          toastr.error(error.response.data.message);
+        } else {
+          toastr.error('Internal Servor Error');
+        }
       });
   }
 

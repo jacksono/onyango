@@ -5,6 +5,7 @@ const db = require('../db'); /*eslint-disable-line */
 const Note = require('../db/models/note');
 const User = require('../db/models/user');
 
+/* eslint no-console: 0 */
 const ensureAuthenticated = (req, res, next) => {
   if (!(req.headers && req.headers.authorization)) {
     return res.status(401).send({ message: 'Please log in to access this page' });
@@ -37,14 +38,20 @@ router.get('/', ensureAuthenticated, (req, res) => {
       .then((result) => {
         res.status(200).send(result);
       })
-      .catch(error => console.error(error));
+      .catch((error) => {
+        res.status(500).send({ message: 'Internal Server Error' });
+        console.error(error);
+      });
   }
 });
 
 router.delete('/:id', ensureAuthenticated, (req, res) => {
   Note.findById(parseInt(req.params.id))
     .then((note) => {
-      if (note && note.userId !== req.viewerId) {
+      if (!note) {
+        return res.status(404).send({ message: 'Note does not exist' });
+      }
+      if (note.userId !== req.viewerId) {
         return res.status(403).send({ message: 'Permission Denied' });
       }
       if (req.params.id) {
@@ -52,10 +59,17 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
           .then(() => {
             res.status(200).send({ message: 'Note deleted' });
           })
-          .catch(error => console.error(error));
+          .catch((error) => {
+            res.status(500).send({ message: 'Internal Server Error' });
+            console.error(error);
+          });
       } else {
         res.status(400).send({ message: 'Invalid or missing parameter' });
       }
+    })
+    .catch((error) => {
+      res.status(500).send({ message: 'Internal Server Error' });
+      console.error(error);
     });
 });
 
@@ -68,7 +82,14 @@ router.post('/', ensureAuthenticated, (req, res) => {
     .then((response) => {
       res.status(201).send(response);
     })
-    .catch(error => console.error(error));
+    .catch((error) => {
+      if (error.constructor.name === 'UniqueConstraintError') {
+        res.status(409).send({ message: 'Title Already Used' });
+      } else {
+        res.status(500).send({ message: 'Internal Server Error' });
+      }
+      console.error(error);
+    });
 });
 
 router.patch('/:id', ensureAuthenticated, (req, res) => {
@@ -84,7 +105,14 @@ router.patch('/:id', ensureAuthenticated, (req, res) => {
         .then((response) => {
           res.status(200).send(response);
         })
-        .catch(error => console.error(error));
+        .catch((error) => {
+          if (error.constructor.name === 'UniqueConstraintError') {
+            res.status(409).send({ message: 'Title Already Used' });
+          } else {
+            res.status(500).send({ message: 'Internal Server Error' });
+          }
+          console.error(error);
+        });
     });
 });
 
