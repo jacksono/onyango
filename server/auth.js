@@ -47,7 +47,7 @@ router.post('/signin', (req, res) => {
   User.findOne({ where: { username: req.body.username } })
     .then((user) => {
       if (!user) {
-        res.status(401).send({ message: 'Invalid Credentials' });
+        res.status(404).send({ message: 'No user with that username' });
         return;
       }
       verifyPassword(req.body.password, user.password);

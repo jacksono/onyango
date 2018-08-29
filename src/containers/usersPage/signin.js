@@ -39,7 +39,7 @@ class SignIn extends React.Component {
           history.push('/notes');
         })
         .catch((error) => {
-          if (error.response.status === 401) {
+          if (error.response.status === 401 || error.response.status === 404) {
             toastr.error(error.response.data.message);
           } else {
             toastr.error('Internal Server Error');
