@@ -24,13 +24,13 @@
     "toastr": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"nodemon server\"",
+    "start": "node server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "seed": "node db/seed.js",
     "api-test": "jest --runInBand /server",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build && npm run seed"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
