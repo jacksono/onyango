@@ -23,7 +23,7 @@ class SignIn extends React.Component {
     const { history } = this.props;
     const Exp = /^([0-9]|[a-z])+([0-9a-z]+)$/i;
     if (!username.match(Exp)) {
-      toastr.error('Username can only contain numbers and letters');
+      toastr.error('Username should contain atleast 2 characters of only numbers and letters');
       return;
     }
     if (username.trim() && password.trim()) {

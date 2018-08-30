@@ -20,7 +20,7 @@ router.post('/register', (req, res) => {
     return;
   }
   if (!req.body.username.match(Exp)) {
-    res.status(400).send({ message: 'Username can only contain numbers and letters' });
+    res.status(400).send({ message: 'Username should contain atleast 2 characters of only numbers and letters' });
     return;
   }
   User.create({
