@@ -68,7 +68,7 @@ class ViewNote extends React.Component {
     const payload = { title, content };
     const Exp = /^([0-9]+[\s]*|[a-z]+[\s]*)+([0-9a-z]+)$/i;
     if (!title.trim().match(Exp)) {
-      toastr.error('Title can only contain letters and numbers');
+      toastr.error('Title should contain atleast 2 characters of only letters and numbers');
       return;
     }
     axios.patch(`/api/notes/${id}`, payload, { headers: { authorization: `Bearer ${token}` } })

@@ -115,7 +115,7 @@ class User extends React.Component {
       return;
     }
     if (!noteEdit.title.trim().match(Exp)) {
-      toastr.error('Title can only contain letters and numbers');
+      toastr.error('Title should contain atleast 2 characters of only letters and numbers');
       return;
     }
     const payload = { title: noteEdit.title, content: noteEdit.content };

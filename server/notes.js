@@ -82,7 +82,7 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
 router.post('/', ensureAuthenticated, (req, res) => {
   const Exp = /^([0-9]+[\s]*|[a-z]+[\s]*)+([0-9a-z]+)$/i;
   if (!req.body.title.match(Exp)) {
-    res.status(400).send({ message: 'Title can only contain letters and numbers' });
+    res.status(400).send({ message: 'Title should contain atleast 2 characters of only letters and numbers' });
     return;
   }
   Note.create({
@@ -114,7 +114,7 @@ router.patch('/:id', ensureAuthenticated, (req, res) => {
         return res.status(403).send({ message: 'Permission Denied' });
       }
       if (!req.body.title.trim().match(Exp)) {
-        res.status(400).send({ message: 'Title can only contain letters and numbers' });
+        res.status(400).send({ message: 'Title should contain atleast 2 characters of only letters and numbers' });
         return;
       }
       Note.update(

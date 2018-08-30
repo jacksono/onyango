@@ -29,7 +29,7 @@ class AddNote extends React.Component {
     } = this.state;
     const Exp = /^([0-9]+[\s]*|[a-z]+[\s]*)+([0-9a-z]+)$/i;
     if (!title.match(Exp)) {
-      toastr.error('Title can only contain letters and numbers');
+      toastr.error('Title should contain atleast 2 characters of only letters and numbers');
       return;
     }
     if (!(title && content)) {
