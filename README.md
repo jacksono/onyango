@@ -38,9 +38,9 @@ To interact directly with the API you may use [Postman](https://chrome.google.co
 
 ## API Endpoints
 
-| Resource URL | Methods | Description | Requires Token || Payload       |
-| -------- | ------------- | --------- |--------------- |--------------- |
-| `/api/auth/register/` | POST  | User registration | FALSE | N/A   |
+| Resource URL | Methods | Description | Requires Token |
+| -------- | ------------- | --------- |--------------- |
+| `/api/auth/register/` | POST  | User registration | FALSE |
 |  `/api/auth/signIn/` | POST | User login | FALSE |
 |  `/api/notes` | POST | Change Username | TRUE |
 | `/api/notes/` | GET | List user's notes | TRUE |
