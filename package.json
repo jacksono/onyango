@@ -4,19 +4,24 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "bcryptjs": "^2.3.0",
     "body-parser": "^1.18.3",
     "concurrently": "^3.6.1",
     "express": "^4.16.3",
+    "jwt-simple": "^0.5.0",
     "material-ui": "^0.20.0",
+    "moment": "^2.15.2",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.3",
     "pg": "^7.4.3",
+    "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^1.1.5",
     "react-test-renderer": "^16.4.2",
-    "sequelize": "^4.38.0"
+    "sequelize": "^4.38.0",
+    "toastr": "^2.1.4"
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"nodemon server\"",
@@ -24,8 +29,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "seed": "node db/seed.js",
-    "api_test": "jest --runInBand /server",
-    "heroku-postbuild": "npm run build"
+    "api-test": "jest --runInBand /server",
+    "heroku-postbuild": "npm run build && npm run seed"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -35,6 +40,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-react": "^7.11.1",
+    "jest-localstorage-mock": "^2.2.0",
     "superagent": "^3.8.3",
     "supertest": "^3.1.0"
   },

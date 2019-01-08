@@ -4,22 +4,21 @@ const db = require('../index.js');
 const User = db.define(
   'users',
   {
-    title: {
+    username: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
+    },
+
+    password: {
       type: Sequelize.STRING,
       allowNull: false,
     },
 
-    name: {
+    role: {
       type: Sequelize.STRING,
       allowNull: false,
-    },
-
-    salary: {
-      type: Sequelize.DOUBLE,
-    },
-
-    description: {
-      type: Sequelize.TEXT,
+      defaultValue: 'user',
     },
   },
 );

@@ -1,7 +1,7 @@
 const chalk = require('chalk'); /* eslint-disable-line */
 const Sequelize = require('sequelize');
 require('dotenv').config();/* eslint-disable-line */
-
+/* eslint no-console:0 */
 let url = process.env.DATABASE_URL;
 
 if (process.env.NODE_ENV === 'test') {
@@ -18,8 +18,6 @@ const db = new Sequelize(
     logging: false,
     define:
       {
-        // use snake_case column names
-        underscored: true,
         // automatically include timestamp columns
         timestamps: true,
       },

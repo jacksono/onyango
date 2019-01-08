@@ -1,26 +1,33 @@
-body {
+html {
   margin: 0 auto;
-  display: table;
   background-color: whitesmoke;
   font-family: arial;
+  width: 50%
 }
-
-nav ul li {
-  display: block;
-  float: left;
-  width:30%;
-  margin-bottom: 5%;
-  }
 
 .header {
   background-color: gray;
-  padding: 2rem;
-  margin-bottom: 5%;
-
+  padding: 1rem;
 }
 
-input {
-  display: block;
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+.page {
+  text-align: left;
+  background-color: white;
+  padding: 1rem
+}
+
+.title {
+  cursor: pointer;
+  color: gray;
+}
+.title:hover {
+  color: blue;
+}
+
+button:hover {
+  background-color: gray;
+}
+
+button {
+  cursor: pointer;
 }

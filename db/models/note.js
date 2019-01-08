@@ -7,6 +7,7 @@ const Note = db.define(
     title: {
       type: Sequelize.STRING,
       allowNull: false,
+      unique: true,
     },
 
     content: {

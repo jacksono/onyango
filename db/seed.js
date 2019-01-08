@@ -1,19 +1,15 @@
+const bcrypt = require('bcryptjs');
 const db = require('../db');
 
+/* eslint no-console:0 */
 const seedUsers = () => db.Promise.map([
   {
-    title: 'Sir',
-    name: 'Mayombo Charles',
-    salary: 50000,
-    description: 'A good fellow',
-    age: 27,
+    username: 'admin',
+    password: bcrypt.hashSync('email@email.com', bcrypt.genSaltSync()),
   },
   {
-    title: 'Madam',
-    name: 'Benneth Neima',
-    salary: 60000,
-    description: 'A lucky lady',
-    age: 29,
+    username: 'medsender',
+    password: bcrypt.hashSync('email@email.com', bcrypt.genSaltSync()),
   },
 ], user => db.model('users').create(user));
 
@@ -21,6 +17,52 @@ const seedNotes = () => db.Promise.map([
   {
     title: 'Assesment',
     content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
+  },
+  {
+    title: 'Assesment2',
+    content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN2',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
+  },
+  {
+    title: 'Assesment3',
+    content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN3',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
+  },
+  {
+    title: 'Assesment4',
+    content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN4',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
+  },
+  {
+    title: 'Assesment5',
+    content: 'This is the content for the assesment note',
+    userId: 1,
+  },
+  {
+    title: 'The world of PREN5',
+    content: 'Postgres, React, Express, Node',
+    userId: 2,
   },
 ], note => db.model('notes').create(note));
 
